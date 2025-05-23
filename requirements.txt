@@ -1,0 +1,12 @@
+protobuf<3.21
+chromadb
+pysqlite3-binary
+langchain
+langchain-community
+langchainhub
+langchain-chroma
+bs4
+langchain-openai
+lxml
+streamlit
+langchain-google-genai
