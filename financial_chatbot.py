@@ -30,6 +30,7 @@ import sys
 sys.modules["sqlite3"] = pysqlite3
 import chromadb
 
+LAST_N_CHATS = 5
 
 def get_sitemap(url):
     req = Request(
@@ -47,11 +48,13 @@ def get_sitemap(url):
 
 def get_urls(xml, name=None, data=None, verbose=False):
     urls = []
-    for url in xml.find_all("url"):
-        if xml.find("loc"):
-            loc = url.findNext("loc").text
-            urls.append(loc)
-    return urls
+	for url in xml.find_all("url"):
+		if xml.find("loc"):
+			loc = url.findNext("loc").text
+			urls.append(loc)
+		if len(urls) > 2:
+			break
+	return urls
 
 
 def scrape_site(url = "https://zerodha.com/varsity/chapter-sitemap2.xml"):
@@ -164,5 +167,7 @@ if user_input := st.chat_input("Please ask your question!:"):
 	st.session_state['messages'].extend(
 		[HumanMessage(user_input), 
 		 AIMessage(response["answer"])])
+
+	st.session_state['messages'] = st.session_state['messages'][-LAST_N_CHATS:]
 
 	st.write(response["answer"])
