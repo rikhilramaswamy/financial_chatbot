@@ -47,7 +47,7 @@ def get_sitemap(url):
 
 
 def get_urls(xml, name=None, data=None, verbose=False):
-    urls = []
+	urls = []
 	for url in xml.find_all("url"):
 		if xml.find("loc"):
 			loc = url.findNext("loc").text
