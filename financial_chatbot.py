@@ -160,6 +160,15 @@ if 'rag_chain' not in st.session_state:
 if 'messages' not in st.session_state:
     st.session_state['messages'] = []
 
+# Display chat history
+for msg in st.session_state['messages']:
+    if isinstance(msg, HumanMessage):
+        with st.chat_message("user"):
+            st.write(msg.content)
+    elif isinstance(msg, AIMessage):
+        with st.chat_message("assistant"):
+            st.write(msg.content)
+
 if user_input := st.chat_input("Please ask your question!:"):
 	response = st.session_state['rag_chain'].invoke({"input": user_input,
 													 "chat_history": st.session_state['messages']}) 
